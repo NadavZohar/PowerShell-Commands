@@ -1,0 +1,23 @@
+
+
+if ({gsv ($_.Status -eq "Stopped") -and ($_.Name -like "your requested service")})
+
+{
+$EmailFrom = “xx@xxx.xxx”
+
+$EmailTo = “xx@xxx.xxx”
+
+$Subject = “Testing”
+
+$Body = ((gsv)|Where {($_.Status -eq "Stopped") -and ($_.Name -like "your requested service")}|Out-String)
+
+$SMTPServer = “smtp.gmail.com”
+
+$SMTPClient = New-Object Net.Mail.SmtpClient($SmtpServer, 587)
+
+$SMTPClient.EnableSsl = $true
+
+$SMTPClient.Credentials = New-Object System.Net.NetworkCredential(“userName”, “userPassword”);
+
+$SMTPClient.Send($EmailFrom, $EmailTo, $Subject, $Body)
+}
